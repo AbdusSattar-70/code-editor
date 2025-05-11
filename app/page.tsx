@@ -73,7 +73,6 @@ const templates = {
       width: 100%;
       font-family: sans-serif;
     }
-
     body {
       display: flex;
       flex-direction: column;
@@ -81,25 +80,21 @@ const templates = {
       align-items: center;
       background-color: #f9f9f9;
     }
-
      h1 {
       text-align: center;
       color: #6A5;
     }
-
     p {
       color: #66;
-      }
+    }
   </style>
 </head>
 <body>
   <h1>Hello, world!</h1>
   <p>Start editing to see changes in real-time!</p>
 </body>
-</html>
-`,
+</html>`,
   },
-
   "Tailwind Setup": {
     name: "Tailwind Setup",
     language: "html",
@@ -842,6 +837,12 @@ const App = () => {
     );
   };
 
+  // Sidebar collapse state
+  const [isLeftCollapsed, setIsLeftCollapsed] = useState(false);
+  const [isRightCollapsed, setIsRightCollapsed] = useState(false);
+  const leftPanelRef = useRef<any>(null); // Type as any for imperative API
+  const rightPanelRef = useRef<any>(null);
+
   return (
     <>
       <main
@@ -871,8 +872,7 @@ const App = () => {
           .scrollable {
             overflow: auto;
             position: relative;
-
-            scrollbar-width: thin; /* Default thin scrollbar */
+            scrollbar-width: thin;
             scrollbar-color: transparent transparent;
           }
 
@@ -894,7 +894,7 @@ const App = () => {
           }
 
           .scrollable:hover {
-            scrollbar-color: rgba(107, 114, 128, 0.4) transparent; /* Visible on hover */
+            scrollbar-color: rgba(107, 114, 128, 0.4) transparent;
           }
 
           .panel-bg {
@@ -941,23 +941,54 @@ const App = () => {
 
         <PanelGroup direction="horizontal" className="flex-1">
           {/* Left Menu */}
-          <div className="flex flex-col items-center justify-baseline gap-6 h-full w-10 transition-colors duration-200">
+          <div className="flex flex-col items-center justify-center gap-6 h-full w-10 transition-all duration-200">
+            {/* Explorer Toggle Button */}
             <button
-              title="open explorer || close explorer"
-              type="button"
+              onClick={() => {
+                if (leftPanelRef.current) {
+                  if (isLeftCollapsed) {
+                    leftPanelRef.current.expand();
+                    setIsLeftCollapsed(false); // Panel is now expanded
+                  } else {
+                    leftPanelRef.current.collapse();
+                    setIsLeftCollapsed(true); // Panel is now collapsed
+                  }
+                }
+              }}
+              title={isLeftCollapsed ? "Open Explorer" : "Close Explorer"}
               className="cursor-pointer flex items-center"
             >
-              <PanelLeftOpen size={20} className="mr-2 text-blue-500" />
-              <PanelLeftClose size={20} className="mr-2 text-blue-500" />
+              {isLeftCollapsed ? (
+                <PanelLeftOpen size={20} className="text-blue-500" />
+              ) : (
+                <PanelLeftClose size={20} className="text-blue-500" />
+              )}
             </button>
+
+            {/* Right Panel Toggle */}
             <button
-              title="open Preview || close Preview"
-              type="button"
+              onClick={() => {
+                if (rightPanelRef.current) {
+                  if (isRightCollapsed) {
+                    rightPanelRef.current.expand();
+                    setIsRightCollapsed(false); // Panel is now expanded
+                  } else {
+                    rightPanelRef.current.collapse();
+                    setIsRightCollapsed(true); // Panel is now collapsed
+                  }
+                }
+              }}
+              title={isRightCollapsed ? "Open Preview" : "Close Preview"}
               className="cursor-pointer flex items-center"
             >
-              <MonitorCheck size={20} className="mr-2 text-blue-500" />
-              <Monitor size={20} className="mr-2 text-blue-500" />
+              {isRightCollapsed ? (
+                <Monitor size={20} className="text-blue-500" />
+              ) : (
+                <MonitorCheck size={20} className="text-blue-500" />
+              )}
             </button>
+
+            {/* Save Button */}
             <button
               onClick={handleSave}
               className="cursor-pointer flex items-center"
@@ -965,6 +996,8 @@ const App = () => {
             >
               <Save size={20} className="mr-2 text-blue-500" />
             </button>
+
+            {/* Theme Toggle Button */}
             <button
               onClick={() => setIsDarkTheme(!isDarkTheme)}
               className="cursor-pointer flex items-center"
@@ -977,8 +1010,17 @@ const App = () => {
               )}
             </button>
           </div>
+
           {/* Left Sidebar */}
-          <Panel defaultSize={16} minSize={12} className="panel-bg">
+          <Panel
+            ref={leftPanelRef}
+            defaultSize={16}
+            minSize={16}
+            collapsible={true}
+            onCollapse={(collapsed) => setIsLeftCollapsed(collapsed)}
+            onExpand={() => setIsLeftCollapsed(false)}
+            className="panel-bg"
+          >
             <div className="h-full p-3 pt-0">
               <div
                 className={`h-10 flex items-center px-3 gap-1 transition-colors duration-200 ${
@@ -992,7 +1034,6 @@ const App = () => {
                   Explorer
                 </h2>
               </div>
-              {/* File/Folder Creation Toolbar */}
               <div
                 className={`h-10 flex items-center px-3 gap-1 transition-colors duration-200 ${
                   isDarkTheme
@@ -1070,6 +1111,7 @@ const App = () => {
             </div>
           </Panel>
           <PanelResizeHandle className="w-1 cursor-col-resize hover:bg-blue-500 active:bg-blue-600 transition-colors z-10" />
+
           {/* Central Area */}
           <Panel
             defaultSize={40}
@@ -1078,7 +1120,6 @@ const App = () => {
           >
             <PanelGroup direction="vertical" className="flex-1">
               <Panel defaultSize={30} minSize={10} className="panel-bg">
-                {/* Opened File Navbar */}
                 <div className="h-full flex flex-col">
                   <div
                     className={`h-10 flex items-center px-3 gap-1 scrollable transition-colors duration-200 ${
@@ -1137,7 +1178,6 @@ const App = () => {
                         </button>
                       ))}
                   </div>
-                  {/* Code Editor Top Debugger Toolbar */}
                   <div
                     className={`h-10 flex items-center justify-between px-3 gap-1 transition-colors duration-200 ${
                       isDarkTheme
@@ -1268,7 +1308,6 @@ const App = () => {
                       <span>{isRunning ? "Pause Live" : "Go Live"}</span>
                     </button>
                   </div>
-                  {/* Code Editor */}
                   <div className="flex-1 scrollable">
                     <div
                       className={`${firaCode.style} text-sm leading-6 h-full ${
@@ -1316,8 +1355,17 @@ const App = () => {
             </PanelGroup>
           </Panel>
           <PanelResizeHandle className="w-1 cursor-col-resize hover:bg-blue-500 active:bg-blue-600 transition-colors z-10" />
+
           {/* Right Sidebar Preview Panel */}
-          <Panel defaultSize={30} minSize={14} className="panel-bg">
+          <Panel
+            ref={rightPanelRef}
+            defaultSize={30}
+            minSize={30}
+            collapsible={true}
+            onCollapse={(collapsed) => setIsRightCollapsed(collapsed)}
+            onExpand={() => setIsRightCollapsed(false)}
+            className="panel-bg"
+          >
             <div className="h-full p-3 pt-0 scrollable">
               <div
                 className={`h-10 flex items-center px-3 gap-1 transition-colors duration-200 ${
