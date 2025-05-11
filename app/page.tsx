@@ -1017,7 +1017,7 @@ const App = () => {
             defaultSize={16}
             minSize={16}
             collapsible={true}
-            onCollapse={(collapsed) => setIsLeftCollapsed(collapsed)}
+            onCollapse={() => setIsLeftCollapsed(true)}
             onExpand={() => setIsLeftCollapsed(false)}
             className="panel-bg"
           >
@@ -1362,7 +1362,7 @@ const App = () => {
             defaultSize={30}
             minSize={30}
             collapsible={true}
-            onCollapse={(collapsed) => setIsRightCollapsed(collapsed)}
+            onCollapse={() => setIsRightCollapsed(true)}
             onExpand={() => setIsRightCollapsed(false)}
             className="panel-bg"
           >
