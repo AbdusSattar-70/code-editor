@@ -68,7 +68,3 @@ body {
 .scrollable:hover {
   scrollbar-color: rgba(107, 114, 128, 0.4) transparent;
 }
-/*
-.panel-bg {
-  background-color: ${isDarkTheme ? "#1f2937" : "#f3f4f6"};
-} */

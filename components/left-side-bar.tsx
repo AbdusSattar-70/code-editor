@@ -12,11 +12,11 @@ import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { FileTreeNode } from "./file-tree-node";
 import { getLanguageFromExtension } from "@/lib/get-language-ext";
+import { findNodeById } from "@/lib/find-node-by-id";
 
 interface LeftSideBarProps {
   fileTree: FileNode[];
   setFileTree: React.Dispatch<React.SetStateAction<FileNode[]>>;
-  findNodeById: (nodes: FileNode[], id: string) => FileNode | null;
   setConsoleOutput: React.Dispatch<React.SetStateAction<string[]>>;
   selectedItemId: string | null;
   setSelectedItemId: (id: string | null) => void;
@@ -28,7 +28,6 @@ interface LeftSideBarProps {
 export const LeftSideBar = ({
   fileTree,
   setFileTree,
-  findNodeById,
   setConsoleOutput,
   selectedItemId,
   setSelectedItemId,
@@ -140,7 +139,7 @@ export const LeftSideBar = ({
   };
 
   return (
-    <div className="h-full p-3 pt-0">
+    <div className="h-full pl-3 pt-0">
       <div
         className={`h-10 flex items-center px-3 gap-1 transition-colors duration-200 ${
           isDarkTheme

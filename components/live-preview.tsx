@@ -1,10 +1,17 @@
-import { Pause, Radio } from "lucide-react";
+import { getTimestamp } from "@/lib/get-timestamp";
+import {
+  Pause,
+  Radio,
+  SquareArrowOutUpRight,
+  TvMinimalPlay,
+} from "lucide-react";
 
 interface LivePreviewProps {
   isRunning: boolean;
   debouncedCode: string;
   handleLivePreview: () => void;
   isDarkTheme: boolean;
+  setConsoleOutput: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 export const LivePreview: React.FC<LivePreviewProps> = ({
@@ -12,7 +19,22 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
   debouncedCode,
   handleLivePreview,
   isDarkTheme,
+  setConsoleOutput,
 }) => {
+  const openPreviewInNewTab = () => {
+    if (debouncedCode) {
+      const win = window.open("", "_blank");
+      if (win) {
+        win.document.write(debouncedCode);
+        win.document.close();
+        setConsoleOutput((prev) => [
+          ...prev,
+          `${getTimestamp()} Opened live preview in new tab`,
+        ]);
+      }
+    }
+  };
+
   const wrapperClass = `flex flex-col items-center justify-center h-full w-full ${
     isDarkTheme ? "bg-gray-900 text-gray-100" : "bg-white text-gray-800"
   }`;
@@ -62,11 +84,43 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
   }
 
   return (
-    <iframe
-      title="Live Preview"
-      className="h-full w-full"
-      sandbox="allow-scripts"
-      srcDoc={debouncedCode}
-    />
+    <div className="h-full p-3 pt-0 scrollable">
+      <div
+        className={`h-10 flex items-center px-3 gap-1 transition-colors duration-200 ${
+          isDarkTheme
+            ? "bg-gray-800/70 border-gray-700"
+            : "bg-gray-100/70 border-gray-200"
+        } backdrop-blur-sm border-b`}
+      >
+        <h2 className="animate-pulse-subtle text-sm font-medium uppercase tracking-wider text-gray-500 flex items-center">
+          <TvMinimalPlay size={16} className="mr-2 text-blue-500" />
+          Preview
+        </h2>
+        <div
+          className={`h-5 mx-1 w-px ${
+            isDarkTheme ? "bg-gray-700" : "bg-gray-300"
+          }`}
+        ></div>
+        <button
+          onClick={openPreviewInNewTab}
+          className={`p-1.5 rounded-md transition-colors ${
+            isDarkTheme ? "text-green-400" : "text-green-500"
+          } hover:bg-green-500/20 cursor-pointer`}
+          title="Open in New Tab"
+        >
+          <SquareArrowOutUpRight size={16} />
+        </button>
+      </div>
+      <div className="flex flex-col h-[calc(100%-2.5rem)] rounded-md scrollable">
+        <div className="flex-grow bg-white w-full">
+          <iframe
+            title="Live Preview"
+            className="h-full w-full"
+            sandbox="allow-scripts"
+            srcDoc={debouncedCode}
+          />
+        </div>
+      </div>
+    </div>
   );
 };
