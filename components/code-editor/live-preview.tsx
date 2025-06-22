@@ -60,7 +60,7 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
           only render HTML files.
         </p>
         <p className={messageClass}>
-          Click "Go Live" to see real-time changes.
+          Click &quot;Go Live&quot; to see real-time changes.
         </p>
       </div>
     );

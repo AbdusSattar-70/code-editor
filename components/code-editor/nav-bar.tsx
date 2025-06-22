@@ -1,4 +1,5 @@
 import { Brain } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { toast } from "react-toastify";
@@ -43,7 +44,9 @@ export const NavBar: React.FC<NavBarProps> = ({ isDarkTheme }) => {
           className="flex items-center transition-transform hover:scale-105"
         >
           <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-blue-500 shadow-md">
-            <img
+            <Image
+              width={32}
+              height={32}
               title="Upload Your Profile Photo"
               src={profileImage}
               alt="Profile"
