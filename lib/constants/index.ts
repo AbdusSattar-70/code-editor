@@ -1,6 +1,6 @@
 const getBaseUrl = () =>
   process.env.NODE_ENV === "production"
-    ? "https://f-ledger-backend.vercel.app"
+    ? "https://code-editor-backend-one.vercel.app"
     : "http://localhost:3001";
 
 export const API_ROUTES = {
