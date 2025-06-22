@@ -1,0 +1,5 @@
+ngrok http --url=cosmic-hare-evident.ngrok-free.app 3000
+
+https://cosmic-hare-evident.ngrok-free.app/
+
+mongopass:GdhGad4Hlpmw0yVj
