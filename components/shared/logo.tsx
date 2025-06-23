@@ -18,7 +18,7 @@ function LogoIcon() {
         className="animate-draw-polygon"
       />
 
-      {/* Visible 'F' text */}
+      {/* Visible 'L' text */}
       <text
         x="39"
         y="60"
@@ -27,7 +27,7 @@ function LogoIcon() {
         fill="currentColor"
         fontFamily="monospace"
       >
-        F
+        L
       </text>
     </svg>
   );

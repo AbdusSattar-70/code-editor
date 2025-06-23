@@ -183,17 +183,18 @@
   animation: draw 4s ease-in-out infinite;
 }
 
-.pen-cursor {
-  display: inline-block;
-  animation: write 0.5s infinite;
-}
-
-@keyframes write {
+@keyframes gradientFlicker {
   0%,
   100% {
-    transform: translateY(0);
+    opacity: 0.9;
+    text-shadow: 0 0 4px #fff, 0 0 8px #0ff, 0 0 12px #0ff;
   }
   50% {
-    transform: translateY(2px);
+    opacity: 1;
+    text-shadow: 0 0 6px #fff, 0 0 12px #0ff, 0 0 18px #0ff;
   }
+}
+
+.animate-gradient-flicker {
+  animation: gradientFlicker 2s ease-in-out infinite;
 }
