@@ -27,11 +27,11 @@ export const Branding = () => {
           fill="currentColor"
           fontFamily="monospace"
         >
-          F
+          L
         </text>
       </svg>
       <span className="text-xl font-semibold bg-gradient-to-r from-blue-500 to-violet-600 bg-clip-text text-transparent">
-        F-Ledger
+        LiCoderZ
       </span>
     </h1>
   );

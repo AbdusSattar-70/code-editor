@@ -39,3 +39,14 @@ export const FEEDBACK_MSG = {
   [STATUS.OFFLINE]: "Opps! You are offline.",
   [STATUS.BACK_ONLINE]: "You're back online!",
 } as const;
+
+export const COLORS = {
+  bg: "#161616",
+  fg: "#fff",
+  neonGreen: "#39FF14",
+  neonMagenta: "#FF1AFF",
+  neonBlue: "#1AE0FF",
+  gray: "#222",
+  border: "#fff",
+  inactive: "#4B4B4B",
+} as const;
