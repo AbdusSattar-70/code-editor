@@ -22,7 +22,7 @@ export default function AuthHomePage() {
             features, and a space-themed idle game.
           </p>
           <p className="mt-6 text-sm italic opacity-80">
-            Start coding your universe now.
+            Start coding your universe now!
           </p>
         </div>
         <div className="absolute inset-0 bg-black/50" />
